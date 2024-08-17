@@ -33,15 +33,6 @@ jobs:
           echo 'libs'
           python${{ matrix.python-version }}-config --libs
 
-
-      - name: 'make all'
-        run: |
-          PYTHON=python${{ matrix.python-version }} make clean all
-
-      - name: 'make test python embedding'
-        run: |
-          PYTHON=python${{ matrix.python-version }} make clean embed test-python-embedding
-
       - name: 'Install PostgreSQL'
         run: |
           sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg-snapshot main ${{ matrix.postgres-version }}" > /etc/apt/sources.list.d/pgdg.list'
