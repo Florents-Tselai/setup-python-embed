@@ -71,7 +71,8 @@ jobs:
         run: |
           export PG_CONFIG=$HOME/local/bin/pg_config 
           export CC=/usr/bin/gcc 
-          export PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} 
+#          export PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }}
+          export PYTHON="$pythonLocation"/bin/python3
           export PYVERSION=${{ matrix.python-version }} 
           export PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) 
           export PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags)
