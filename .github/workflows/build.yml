@@ -63,7 +63,7 @@ jobs:
         run: |
           cd postgresql-16.1
           CC=/usr/bin/gcc ./configure --prefix=/usr/lib/postgresql/${{ matrix.postgres-version }}
-          make
+          make -j
           sudo make install
 
       - name: 'Start PostgreSQL'
@@ -72,7 +72,7 @@ jobs:
           export PGETC=/etc/postgresql/${{ matrix.postgres-version }}/main
           export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
           sudo cp ./ci/pg_hba.conf $PGETC/pg_hba.conf
-          sudo su postgres -c "$PGBIN/pg_ctl --pgdata $PGDATA start -o '-c config_file=$PGETC/postgresql.conf -p 5432'" || exit 1
+          sudo $PGBIN/pg_ctl --pgdata $PGDATA start -o '-c config_file=$PGETC/postgresql.conf -p 5432' || exit 1
 
       - name: 'make all'
         run: |
