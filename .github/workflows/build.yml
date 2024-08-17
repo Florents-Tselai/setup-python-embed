@@ -73,7 +73,7 @@ jobs:
           export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
           sudo mkdir -p $PGETC
           sudo cp ./ci/pg_hba.conf $PGETC/pg_hba.conf
-          sudo $PGBIN/pg_ctl --pgdata $PGDATA start -o '-c config_file=$PGETC/postgresql.conf -p 5432' || exit 1
+          $PGBIN/initdb $PGDATA
 
       - name: 'make all'
         run: |
