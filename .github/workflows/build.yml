@@ -79,6 +79,10 @@ jobs:
         run: |
           PG_CONFIG=$HOME/local/bin/pg_cgfdonfig CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make clean test-python-embedding all
 
+      - name: 'make install'
+        run: |  
+          PG_CONFIG=$HOME/local/bin/pg_cgfdonfig CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make install
+
       - name: 'Stop PostgreSQL'
         run: |
           export PGBIN=$HOME/local/bin
