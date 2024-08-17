@@ -13,7 +13,7 @@ TESTS = $(wildcard test/sql/*.sql)
 REGRESS = $(patsubst test/sql/%.sql,%,$(TESTS))
 REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION)
 
-CC ?=
+CC ?= /usr/bin/gcc
 PYTHON ?= python3.11
 PYVERSION ?= 3.11
 PYTHON_CONFIG = $(PYTHON)-config
