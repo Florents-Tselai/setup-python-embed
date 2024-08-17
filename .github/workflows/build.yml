@@ -46,19 +46,11 @@ jobs:
           make -j
           make install
 
-      - name: 'Start PostgreSQL'
-        run: |
-          export PGDATA=$HOME/pgdata
-          export PGBIN=$HOME/local/bin
-          export LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.11.9/x64/lib:$HOME/local/lib:$LD_LIBRARY_PATH
-          $PGBIN/initdb $PGDATA
-          $PGBIN/pg_ctl --pgdata $PGDATA start
-
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: 'python-config'
+      - name: 'debug python-config'
         run: |
           echo 'cflags'
           python${{ matrix.python-version }}-config --cflags
@@ -84,6 +76,14 @@ jobs:
           export PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) 
           export PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags)
           export make -e clean test-python-embedding all install
+
+#      - name: 'Start PostgreSQL'
+#        run: |
+#          export PGDATA=$HOME/pgdata
+#          export PGBIN=$HOME/local/bin
+#          export LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.11.9/x64/lib:$HOME/local/lib:$LD_LIBRARY_PATH
+#          $PGBIN/initdb $PGDATA
+#          $PGBIN/pg_ctl --pgdata $PGDATA start
 
 #      - name: 'make installcheck'
 #        run: |
