@@ -40,21 +40,18 @@ jobs:
 
       - name: Build PostgreSQL
         run: |
+          mkdir -p $HOME/local
           cd postgresql-16.1
-          CC=/usr/bin/gcc ./configure --prefix=/usr/lib/postgresql/${{ matrix.postgres-version }}
+          CC=/usr/bin/gcc ./configure --prefix=$HOME/local
           make -j
-          sudo make install
+          make install
 
       - name: 'Start PostgreSQL'
         run: |
-          export PGDATA=./pgdata
-          export PGETC=/etc/postgresql/${{ matrix.postgres-version }}/main
-          export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
-          sudo mkdir -p $PGETC
-          sudo cp ./ci/pg_hba.conf $PGETC/pg_hba.conf
+          export PGDATA=$HOME/pgdata
+          export PGBIN=$HOME/local/bin
           $PGBIN/initdb $PGDATA
           $PGBIN/pg_ctl --pgdata $PGDATA start
-
 
       - uses: actions/setup-python@v5
         with:
@@ -79,10 +76,10 @@ jobs:
 
       - name: 'make all'
         run: |
-          sudo -E CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make -e clean test-python-embedding all install installcheck
+          PG_CONFIG=$HOME/local/bin/pg_config CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make -e clean test-python-embedding all install installcheck
 
       - name: 'Stop PostgreSQL'
         run: |
-          export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
+          export PGBIN=$HOME/local/bin
           $PGBIN/pg_ctl --pgdata $PGDATA stop
 
