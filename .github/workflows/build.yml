@@ -74,7 +74,7 @@ jobs:
           sudo mkdir -p $PGETC
           sudo cp ./ci/pg_hba.conf $PGETC/pg_hba.conf
           $PGBIN/initdb $PGDATA
-          $PGBIN/postgres -D $PGDATA
+          $PGBIN/pg_ctl -D $PGDATA
 
       - name: 'make all'
         run: |
