@@ -34,7 +34,7 @@ jobs:
 
       - name: Download PostgreSQL
         run: |
-          wget https://ftp.postgresql.org/pub/source/v16.0/postgresql-${{ matrix.postgres-version }}.0.tar.gz
+          wget https://ftp.postgresql.org/pub/source/v${{ matrix.postgres-version }}.0/postgresql-${{ matrix.postgres-version }}.0.tar.gz
           tar -xzf postgresql-${{ matrix.postgres-version }}.0.tar.gz
           cd postgresql-${{ matrix.postgres-version }}.0
 
