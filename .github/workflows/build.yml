@@ -13,27 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: 'python-config'
-        run: |
-          echo 'cflags'
-          python${{ matrix.python-version }}-config --cflags
-          
-          echo 'includes'
-          python${{ matrix.python-version }}-config --includes
-          
-          echo 'ldflags'
-          python${{ matrix.python-version }}-config --ldflags
-          
-          echo 'embed'
-          python${{ matrix.python-version }}-config --embed
-          
-          echo 'libs'
-          python${{ matrix.python-version }}-config --libs
-
       - name: Set up dependencies
         run: |
           sudo apt-get update
@@ -75,6 +54,28 @@ jobs:
           sudo cp ./ci/pg_hba.conf $PGETC/pg_hba.conf
           $PGBIN/initdb $PGDATA
           $PGBIN/pg_ctl --pgdata $PGDATA start
+
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 'python-config'
+        run: |
+          echo 'cflags'
+          python${{ matrix.python-version }}-config --cflags
+          
+          echo 'includes'
+          python${{ matrix.python-version }}-config --includes
+          
+          echo 'ldflags'
+          python${{ matrix.python-version }}-config --ldflags
+          
+          echo 'embed'
+          python${{ matrix.python-version }}-config --embed
+          
+          echo 'libs'
+          python${{ matrix.python-version }}-config --libs
 
       - name: 'make all'
         run: |
