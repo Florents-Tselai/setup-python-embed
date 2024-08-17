@@ -36,5 +36,5 @@ jobs:
 
       - name: 'cc call.c'
         run: |
-          gcc -o call call.c $(python${{ matrix.python-version }}-config --cflags --ldflags) -lpython${{ matrix.python-version }}
+          PYTHON=python${{ matrix.python-version }} make clean all
 
