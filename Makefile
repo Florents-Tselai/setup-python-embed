@@ -28,6 +28,7 @@ TESTS = $(wildcard test/sql/*.sql)
 REGRESS = $(patsubst test/sql/%.sql,%,$(TESTS))
 REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION)
 
+CC ?=
 PG_CFLAGS ?=
 PG_LDFLAGS ?=
 SHLIB_LINK = -lpython$(PYVERSION)
