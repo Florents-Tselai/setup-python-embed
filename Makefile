@@ -1,4 +1,23 @@
 
+PG_CONFIG ?= pg_config
+
+EXTVERSION = 0.1.0
+
+EXTENSION = pgpyembed
+MODULE_big = $(EXTENSION)
+OBJS = $(EXTENSION).o
+
+DATA = $(wildcard sql/*--*.sql)
+
+TESTS = $(wildcard test/sql/*.sql)
+REGRESS = $(patsubst test/sql/%.sql,%,$(TESTS))
+REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION)
+
+CC ?=
+PG_CFLAGS ?=
+PG_LDFLAGS ?=
+SHLIB_LINK += -lpython$(PYVERSION)
+
 PYTHON ?=
 PYVERSION ?=
 PYTHON_CONFIG = $(PYTHON)-config
@@ -14,24 +33,6 @@ test-python-embedding: embed
 		exit 1; \
 	fi
 
-PG_CONFIG ?= pg_config
-
-EXTVERSION = 0.1.0
-
-MODULE_big = pgpyembed
-OBJS = pgpyembed.o
-EXTENSION = pgpyembed
-
-DATA = $(wildcard sql/*--*.sql)
-
-TESTS = $(wildcard test/sql/*.sql)
-REGRESS = $(patsubst test/sql/%.sql,%,$(TESTS))
-REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION)
-
-CC ?=
-PG_CFLAGS ?=
-PG_LDFLAGS ?=
-SHLIB_LINK += -lpython$(PYVERSION)
 
 EXTRA_CLEAN: embed
 
