@@ -38,6 +38,29 @@ jobs:
         run: |
           PYTHON=python${{ matrix.python-version }} make clean all
 
-      - name: 'make test'
+      - name: 'make test python embedding'
         run: |
-          PYTHON=python${{ matrix.python-version }} make test
+          PYTHON=python${{ matrix.python-version }} make clean embed test-python-embedding
+
+      - name: 'Install PostgreSQL'
+        run: |
+          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg-snapshot main ${{ matrix.postgres-version }}" > /etc/apt/sources.list.d/pgdg.list'
+          curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
+          sudo apt-get update
+          sudo apt-get -y install postgresql-${{ matrix.postgres-version }} postgresql-server-dev-${{ matrix.postgres-version }}  
+
+      - name: 'Start PostgreSQL'
+        run: |
+          export PGDATA=/var/lib/postgresql/${{ matrix.postgres-version }}/main
+          export PGETC=/etc/postgresql/${{ matrix.postgres-version }}/main
+          export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
+          sudo cp ./ci/pg_hba.conf $PGETC/pg_hba.conf
+          sudo su postgres -c "$PGBIN/pg_ctl --pgdata $PGDATA start -o '-c config_file=$PGETC/postgresql.conf -p 5432'" || exit 1
+
+      - name: 'make all'
+          PYTHON=python${{ matrix.postgres-version }}PG_CFLAGS=$(python${{ matrix.postgres-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.postgres-version }}-config --ldflags) make clean test-python-embedding all
+
+      - name: 'Stop PostgreSQL'
+        run: |
+          export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
+          sudo su postgres -c "$PGBIN/pg_ctl stop -D /var/lib/postgresql/${{ matrix.postgres-version }}/main"
