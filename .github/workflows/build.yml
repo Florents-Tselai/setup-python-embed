@@ -78,17 +78,13 @@ jobs:
           export PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags)
           make -e clean test-python-embedding all install
 
-      - name: 'Start PostgreSQL'
-        run: |
           export PGDATA=$HOME/pgdata
           export PGBIN=$HOME/local/bin
           export LD_LIBRARY_PATH="$pythonLocation"/lib:/usr/local/lib:/usr/lib:$HOME/local/lib:$LD_LIBRARY_PATH
           $PGBIN/initdb $PGDATA
           $PGBIN/pg_ctl --pgdata $PGDATA start
 
-#      - name: 'make installcheck'
-#        run: |
-#          PG_CONFIG=$HOME/local/bin/pg_config CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make installcheck
+          make installcheck
 
 #      - name: 'Stop PostgreSQL'
 #        run: |
