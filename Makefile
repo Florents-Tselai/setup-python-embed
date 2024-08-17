@@ -20,7 +20,7 @@ PYTHON_CONFIG = $(PYTHON)-config
 CC ?=
 PG_CFLAGS ?= $(shell $(PYTHON)-config --includes)
 PG_LDFLAGS ?= $(shell $(PYTHON)-config --ldflags)
-SHLIB_LINK += -lpython$(PYVERSION)
+SHLIB_LINK ?= -lpython$(PYVERSION)
 
 
 
