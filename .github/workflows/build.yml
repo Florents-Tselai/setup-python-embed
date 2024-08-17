@@ -71,7 +71,7 @@ jobs:
           export PGDATA=/var/lib/postgresql/${{ matrix.postgres-version }}/main
           export PGETC=/etc/postgresql/${{ matrix.postgres-version }}/main
           export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
-          sudo mkdir $PGETC
+          sudo mkdir -p $PGETC
           sudo cp ./ci/pg_hba.conf $PGETC/pg_hba.conf
           sudo $PGBIN/pg_ctl --pgdata $PGDATA start -o '-c config_file=$PGETC/postgresql.conf -p 5432' || exit 1
 
