@@ -1,6 +1,6 @@
 
 PYTHON ?=
-PYVERSION = $(shell $(PYTHON) -c "import sysconfig; print(sysconfig.get_config_var('VERSION'))")
+PYVERSION ?=
 PYTHON_CONFIG = $(PYTHON)-config
 
 embed: embed.c
