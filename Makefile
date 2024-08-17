@@ -11,5 +11,10 @@ all: embed
 clean:
 	-rm embed
 
-test:
-	./embed
+test: embed
+	@output=$$(./embed); if [ "$$output" = "$(PYVERSION)" ]; then \
+		echo "Test passed! Output: $$output"; \
+	else \
+		echo "Test failed! Expected: $(PYVERSION), but got: $$output"; \
+		exit 1; \
+	fi

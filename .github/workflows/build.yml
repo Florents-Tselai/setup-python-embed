@@ -34,7 +34,10 @@ jobs:
           python${{ matrix.python-version }}-config --libs
 
 
-      - name: 'cc call.c'
+      - name: 'make all'
         run: |
           PYTHON=python${{ matrix.python-version }} make clean all
 
+      - name: 'make test'
+        run: |
+          PYTHON=python${{ matrix.python-version }} make test
