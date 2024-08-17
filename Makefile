@@ -13,17 +13,19 @@ TESTS = $(wildcard test/sql/*.sql)
 REGRESS = $(patsubst test/sql/%.sql,%,$(TESTS))
 REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION)
 
+PYTHON ?= python3.11
+PYVERSION ?= 3.11
+PYTHON_CONFIG = $(PYTHON)-config
+
 CC ?=
-PG_CFLAGS ?=
+PG_CFLAGS ?= $(shell $(PYTHON)-config --includes)
 PG_LDFLAGS ?=
 SHLIB_LINK += -lpython$(PYVERSION)
 
-PYTHON ?=
-PYVERSION ?=
-PYTHON_CONFIG = $(PYTHON)-config
 
-embed: embed.c
-	gcc -o $@ $< $(shell $(PYTHON_CONFIG) --cflags --ldflags) -lpython$(PYVERSION)
+
+#embed: embed.c
+#	gcc -o $@ $< $(shell $(PYTHON_CONFIG) --cflags --ldflags) -lpython$(PYVERSION)
 
 test-python-embedding: embed
 	@output=$$(./embed); if [ "$$output" = "$(PYVERSION)" ]; then \
