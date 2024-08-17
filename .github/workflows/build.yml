@@ -75,7 +75,7 @@ jobs:
           export PYVERSION=${{ matrix.python-version }} 
           export PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) 
           export PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags)
-          export make -e clean test-python-embedding all install
+          make -e clean test-python-embedding all install
 
 #      - name: 'Start PostgreSQL'
 #        run: |
