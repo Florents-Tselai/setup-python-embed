@@ -51,7 +51,7 @@ jobs:
 
       - name: 'make all'
         run: |
-          PYTHON=python${{ matrix.postgres-version }}PG_CFLAGS=$(python${{ matrix.postgres-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.postgres-version }}-config --ldflags) make clean test-python-embedding all
+          PYTHON=python${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make clean test-python-embedding all
 
       - name: 'Stop PostgreSQL'
         run: |
