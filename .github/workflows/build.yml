@@ -79,9 +79,10 @@ jobs:
 
       - name: 'make all'
         run: |
-          CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make -e clean test-python-embedding all
+          CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make -e clean test-python-embedding all install
 
       - name: 'Stop PostgreSQL'
         run: |
           export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
-          sudo su postgres -c "$PGBIN/pg_ctl stop -D /var/lib/postgresql/${{ matrix.postgres-version }}/main"
+          $PGBIN/pg_ctl --pgdata $PGDATA stop
+
