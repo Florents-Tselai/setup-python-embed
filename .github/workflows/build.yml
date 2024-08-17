@@ -36,5 +36,5 @@ jobs:
 
       - name: 'cc call.c'
         run: |
-          gcc -o call call.c $(python${{ matrix.python-version }}-config --cflags --ldflags)
+          gcc -o call call.c $(python${{ matrix.python-version }}-config --cflags --ldflags) -lpython3.10
 
