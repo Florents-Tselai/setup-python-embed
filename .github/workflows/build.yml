@@ -38,7 +38,7 @@ jobs:
           tar -xzf postgresql-16.1.tar.gz
           cd postgresql-16.1
 
-      - name: Build PostgreSQL
+      - name: 'Build PostgreSQL'
         run: |
           mkdir -p $HOME/local
           cd postgresql-16.1
@@ -50,7 +50,7 @@ jobs:
         run: |
           export PGDATA=$HOME/pgdata
           export PGBIN=$HOME/local/bin
-          export LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.11.9/x64/lib:$HOME/local:$LD_LIBRARY_PATH
+          export LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.11.9/x64/lib:$HOME/local/lib:$LD_LIBRARY_PATH
           $PGBIN/initdb $PGDATA
           $PGBIN/pg_ctl --pgdata $PGDATA start
 
