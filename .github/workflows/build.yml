@@ -41,7 +41,7 @@ jobs:
       - name: 'Build PostgreSQL'
         run: |
           mkdir -p $HOME/local
-          cd postgresql-16.1
+          cd postgresql-${{ matrix.postgres-version }}.0
           CC=/usr/bin/gcc ./configure --prefix=$HOME/local
           make -j
           make install
