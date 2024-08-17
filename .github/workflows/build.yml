@@ -34,12 +34,37 @@ jobs:
           echo 'libs'
           python${{ matrix.python-version }}-config --libs
 
-      - name: 'Install PostgreSQL'
+      - name: Set up dependencies
         run: |
-          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg-snapshot main ${{ matrix.postgres-version }}" > /etc/apt/sources.list.d/pgdg.list'
-          curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
           sudo apt-get update
-          sudo apt-get -y install postgresql-${{ matrix.postgres-version }} postgresql-server-dev-${{ matrix.postgres-version }}  
+          sudo apt-get install -y \
+          build-essential \
+          libreadline-dev \
+          zlib1g-dev \
+          flex \
+          bison \
+          libxml2-dev \
+          libxslt1-dev \
+          libssl-dev \
+          libcurl4-openssl-dev \
+          libkrb5-dev \
+          libpam0g-dev \
+          libldap2-dev \
+          libedit-dev \
+          wget
+
+      - name: Download PostgreSQL
+        run: |
+          wget https://ftp.postgresql.org/pub/source/v${{ matrix.postgres-version }}/postgresql-${{ matrix.postgres-version }}.tar.gz
+          tar -xzf postgresql-${{ matrix.postgres-version }}.tar.gz
+          cd postgresql-${{ matrix.postgres-version }}
+
+      - name: Build PostgreSQL
+        run: |
+          cd postgresql-${{ matrix.postgres-version }}
+          CC=/usr/bin/gcc ./configure --prefix=/usr/lib/postgresql/${{ matrix.postgres-version }}
+          make
+          sudo make install
 
       - name: 'Start PostgreSQL'
         run: |
