@@ -58,6 +58,7 @@ jobs:
           sudo su postgres -c "$PGBIN/pg_ctl --pgdata $PGDATA start -o '-c config_file=$PGETC/postgresql.conf -p 5432'" || exit 1
 
       - name: 'make all'
+        run: |
           PYTHON=python${{ matrix.postgres-version }}PG_CFLAGS=$(python${{ matrix.postgres-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.postgres-version }}-config --ldflags) make clean test-python-embedding all
 
       - name: 'Stop PostgreSQL'
