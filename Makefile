@@ -31,7 +31,7 @@ REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION)
 CC ?=
 PG_CFLAGS ?=
 PG_LDFLAGS ?=
-SHLIB_LINK = -lpython$(PYVERSION)
+SHLIB_LINK += -lpython$(PYVERSION)
 
 EXTRA_CLEAN: embed
 
