@@ -14,13 +14,15 @@ REGRESS = $(patsubst test/sql/%.sql,%,$(TESTS))
 REGRESS_OPTS = --inputdir=test --load-extension=$(EXTENSION)
 
 CC ?=
+PYTHON ?=
+PYVERSION ?=
+PYTHON_CONFIG = $(PYTHON)-config
+
 PG_CFLAGS ?=
 PG_LDFLAGS ?=
 SHLIB_LINK += -lpython$(PYVERSION)
 
-PYTHON ?=
-PYVERSION ?=
-PYTHON_CONFIG = $(PYTHON)-config
+
 
 embed: embed.c
 	gcc -o $@ $< $(shell $(PYTHON_CONFIG) --cflags --ldflags) -lpython$(PYVERSION)
