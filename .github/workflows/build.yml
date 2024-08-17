@@ -83,8 +83,8 @@ jobs:
 #        run: |
 #          PG_CONFIG=$HOME/local/bin/pg_config CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make installcheck
 
-      - name: 'Stop PostgreSQL'
-        run: |
-          export PGBIN=$HOME/local/bin
-          $PGBIN/pg_ctl --pgdata $PGDATA stop
+#      - name: 'Stop PostgreSQL'
+#        run: |
+#          export PGBIN=$HOME/local/bin
+#          $PGBIN/pg_ctl --pgdata $PGDATA start
 
