@@ -1,6 +1,7 @@
 #include "postgres.h"
 
 #include "utils/builtins.h"
+#include "varatt.h"
 
 #include "Python.h"
 
