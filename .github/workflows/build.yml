@@ -21,6 +21,9 @@ jobs:
           echo 'cflags'
           python${{ matrix.python-version }}-config --cflags
           
+          echo 'includes'
+          python${{ matrix.python-version }}-config --includes
+          
           echo 'ldflags'
           python${{ matrix.python-version }}-config --ldflags
           
