@@ -61,7 +61,7 @@ jobs:
 
       - name: Build PostgreSQL
         run: |
-          cd postgresql-${{ matrix.postgres-version }}
+          cd postgresql-16.1
           CC=/usr/bin/gcc ./configure --prefix=/usr/lib/postgresql/${{ matrix.postgres-version }}
           make
           sudo make install
