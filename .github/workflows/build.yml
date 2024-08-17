@@ -73,7 +73,8 @@ jobs:
           export PGBIN=/usr/lib/postgresql/${{ matrix.postgres-version }}/bin
           sudo mkdir -p $PGETC
           sudo cp ./ci/pg_hba.conf $PGETC/pg_hba.conf
-          $PGBIN/initdb $PGDATA
+          sudo $PGBIN/initdb $PGDATA
+          sudo $PGBIN/postgres -D $PGDATA
 
       - name: 'make all'
         run: |
