@@ -79,7 +79,7 @@ jobs:
 
       - name: 'make all'
         run: |
-          CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make -e clean test-python-embedding all install
+          CC=/usr/bin/gcc PYTHON=/opt/hostedtoolcache/Python/3.11.9/x64/bin/python${{ matrix.python-version }} PYVERSION=${{ matrix.python-version }} PG_CFLAGS=$(python${{ matrix.python-version }}-config --includes) PG_LDFLAGS=$(python${{ matrix.python-version }}-config --ldflags) make -e clean test-python-embedding all install installcheck
 
       - name: 'Stop PostgreSQL'
         run: |
