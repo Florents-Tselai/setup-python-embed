@@ -18,7 +18,15 @@ jobs:
 
       - name: 'python-config'
         run: |
-          python${{ matrix.python-version }}-config --cflags --ldflags --embed      
+          echo 'cflags'
+          python${{ matrix.python-version }}-config --cflags --ldflags --embed 
+          echo 'ldflags'
+          python${{ matrix.python-version }}-config --ldflags
+          echo 'embed'
+          python${{ matrix.python-version }}-config --embed
+          echo 'libs'
+          python${{ matrix.python-version }}-config --libs
+
 
       - name: 'cc call.c'
         run: |
